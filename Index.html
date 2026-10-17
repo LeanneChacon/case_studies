@@ -1,0 +1,304 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cultural Humility Case Rooms</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: a one-column workbook — a 15-minute timer that walks every group through three cases, five minutes each, then the open case as a short guided discussion. */
+:root{
+  --bg:#FBFAF5; --surface:#FFFFFC; --tint:#EAF3F5; --line:#D9E4E6;
+  --ink:#1B4A5C; --body:#3E5560; --muted:#5F7680;
+  --teal:#058EAE; --teal-ink:#06728C; --teal-soft:#D6ECF2;
+  --green:#7CA655; --green-ink:#4E7A2E; --green-soft:#E3EED8;
+  --sun:#F9D448; --sun-soft:#FDF3C8; --sun-ink:#6A5A1E;
+  --display:'Rubik', 'Trebuchet MS', Arial, sans-serif;
+  --text:'Nunito Sans', 'Segoe UI', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10232B; --surface:#16303A; --tint:#1A3944; --line:#2A4B57;
+  --ink:#EAF3F5; --body:#C2D6DC; --muted:#93AEB7;
+  --teal:#3FB4D3; --teal-ink:#7FD0E6; --teal-soft:#1B4656;
+  --green:#8FBE66; --green-ink:#A9D486; --green-soft:#253F2A;
+  --sun:#F9D448; --sun-soft:#3A3519; --sun-ink:#F3DE8A; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#10232B; --surface:#16303A; --tint:#1A3944; --line:#2A4B57;
+  --ink:#EAF3F5; --body:#C2D6DC; --muted:#93AEB7;
+  --teal:#3FB4D3; --teal-ink:#7FD0E6; --teal-soft:#1B4656;
+  --green:#8FBE66; --green-ink:#A9D486; --green-soft:#253F2A;
+  --sun:#F9D448; --sun-soft:#3A3519; --sun-ink:#F3DE8A; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 56px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.15}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
+header{display:flex;flex-direction:column;gap:10px}
+header h1{font-size:clamp(30px,5vw,42px);font-weight:600}
+header .lede{color:var(--body);max-width:62ch}
+.stripe{display:flex;gap:6px;height:8px}
+.stripe span{flex:1;border-radius:99px}
+.stripe span:nth-child(1){background:var(--sun)}.stripe span:nth-child(2){background:var(--green)}.stripe span:nth-child(3){background:var(--teal)}
+
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.role{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.role b{display:block;font-family:var(--display);font-weight:600}
+.role span{color:var(--body);font-size:15px}
+@media (max-width:560px){.roles{grid-template-columns:1fr}}
+
+.timer{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;background:var(--tint);border-radius:16px;padding:16px 20px}
+.clock{font-family:var(--display);font-weight:600;font-size:36px;font-variant-numeric:tabular-nums;min-width:4.2ch}
+.timer .now{flex:1;min-width:200px;color:var(--body)}
+.timer .now b{color:var(--ink)}
+.btn{font:inherit;font-weight:800;font-size:15px;padding:9px 16px;border-radius:10px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.bar{flex-basis:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg{display:flex;flex-direction:column;gap:4px;min-width:0}
+.seg .track{height:8px;border-radius:99px;background:var(--line);position:relative;overflow:hidden}
+.seg .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--teal);border-radius:99px}
+.seg small{font-size:13px;font-weight:700;color:var(--muted)}
+.seg.on small{color:var(--ink)}
+.moveon{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--sun-soft);border-radius:10px;padding:10px 14px;font-weight:700;color:var(--ink)}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tab{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:14px;border:2px solid var(--line);background:var(--surface);min-width:0}
+.tab:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.tab .letter{font-family:var(--display);font-weight:700;font-size:15px;color:var(--muted)}
+.tab .name{font-family:var(--display);font-weight:600;font-size:20px;color:var(--ink)}
+.tab[aria-selected="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+.tab[aria-selected="true"] .letter{color:var(--teal-ink)}
+.tab .done{font-size:13px;font-weight:700;color:var(--green-ink)}
+@media (max-width:560px){.tabs{grid-template-columns:1fr}}
+
+.pill{display:inline-block;font-size:13px;font-weight:800;padding:4px 12px;border-radius:99px;white-space:nowrap;align-self:flex-start}
+.pill.moment{background:var(--teal-soft);color:var(--teal-ink)}
+.pill.misstep{background:var(--green-soft);color:var(--green-ink)}
+
+.case{display:flex;flex-direction:column;gap:20px}
+.case-head{display:flex;flex-direction:column;gap:10px}
+.case-head h2{font-size:clamp(28px,4.4vw,36px);font-weight:600}
+.scenario{font-size:clamp(19px,2.4vw,22px);line-height:1.55;background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--teal);border-radius:14px;padding:22px 24px;color:var(--ink)}
+.case[data-kind="misstep"] .scenario{border-left-color:var(--green)}
+
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.step.active{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal) inset}
+.step-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.step h3{font-size:22px;font-weight:600}
+.step .mins{font-size:14px;color:var(--muted);font-weight:700}
+.step ul{margin:0;padding-left:20px;color:var(--body);display:flex;flex-direction:column;gap:4px}
+details{border-top:1px dashed var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:700;color:var(--teal-ink);font-size:15px}
+summary:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+details p{color:var(--body);font-size:15px;margin-top:6px}
+
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="stripe" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="eyebrow">Intercambio · Modeling Cultural Humility</p>
+    <h1>Case study rooms</h1>
+    <p class="lede">Your group has 15 minutes for three short cases, about 5 minutes each. For each one: read it aloud, notice and wonder together, then decide what you would actually say.</p>
+  </header>
+
+  <div class="roles">
+    <div class="role"><b>Reader</b><span>Reads each case aloud. Take turns, or let one person read all three.</span></div>
+    <div class="role"><b>Timekeeper</b><span>Starts the timer below and moves the group to the next case.</span></div>
+    <div class="role"><b>Reporter</b><span>Be ready to share one idea if your group is called on.</span></div>
+  </div>
+
+  <section class="timer" aria-label="Group timer">
+    <span class="clock" id="clock">15:00</span>
+    <p class="now" id="now" aria-live="polite"></p>
+    <button class="btn" id="startBtn" type="button">Start</button>
+    <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+    <div class="bar" id="bar" aria-hidden="true"></div>
+    <div class="moveon" id="moveon" hidden></div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Case studies" id="tabs"></div>
+
+  <article class="case" id="case" role="tabpanel"></article>
+
+  <footer>Back in the main room, we'll hear from a few groups. Be ready to share one thing your group would actually say, from any of the three cases.</footer>
+</div>
+
+<script>
+const CASES = [
+  { id:"A", title:"Practice at home", kind:"moment", kindLabel:"Classroom moment",
+    text:"A student lives with their partner and children, who are all fluent in English. The teacher has encouraged them to practice English at home with their family, but they never do. The teacher feels discouraged and thinks the student isn't motivated to improve.",
+    hints:{
+      notice:"The facts: the family speaks English, and the student doesn't practice at home. “Not motivated” is a story. What language might home be for? How might it feel to be the beginner in front of your own children? What else fills their evenings?",
+      respond:"How could the teacher ask about this with curiosity instead of pressure? What other ways to practice might feel more comfortable?"
+    }},
+  { id:"B", title:"The gift", kind:"misstep", kindLabel:"Teacher misstep",
+    text:"On the last night of class, a student brings their teacher an expensive piece of jewelry as a gift. The teacher thinks it costs too much and doesn't think they'll wear it, so they refuse the gift. The student looks serious and stays quiet for the rest of the class celebration.",
+    hints:{
+      notice:"The facts: a gift was offered and refused, and the student went quiet. What might a gift to a teacher mean where the student grew up? Whose idea of “too much” is this? What might refusing a gift say about the relationship?",
+      respond:"What could the teacher say that evening, or reach out afterward to say? How might they repair this, and handle a gift like this next time?"
+    }},
+  { id:"C", title:"Pets", kind:"moment", kindLabel:"Classroom moment",
+    text:"During a lesson on pets, the teacher shows photos of her dog sleeping in her bed. A student laughs, makes a face, and says, “Dogs in the bed? That's dirty!” The teacher feels offended and moves on quickly.",
+    hints:{
+      notice:"The facts: a student laughed and called dogs in the bed dirty, and the teacher changed the subject. Why might the teacher feel stung? Where do ideas about animals, homes and cleanliness come from? Could the student's reaction be surprise rather than an insult?",
+      respond:"How could the teacher stay curious instead of moving on? What questions could turn this into a conversation where students teach the class about animals where they grew up?"
+    }}
+];
+
+const STEPS = [
+  { key:"pause", name:"Read and pause", mins:1, prompts:["Read the case aloud.","Notice your first reaction, but don't act on it yet."] },
+  { key:"notice", name:"Notice and wonder", mins:2, prompts:["What happened, just the facts? What story might the teacher be telling themselves?","What else could be going on? Name at least two possibilities."] },
+  { key:"respond", name:"Respond", mins:2, prompts:["What would you say or do, in the moment or next class?","Agree on the actual words you would use."] }
+];
+const CASE_SECS = STEPS.reduce((a,s)=>a+s.mins,0)*60;
+const TOTAL = CASE_SECS * CASES.length;
+
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+
+let current = Math.max(0, CASES.findIndex(c => c.id === (location.hash||"").replace("#","").toUpperCase()));
+let remaining = TOTAL, running = false, tick = null;
+
+const tabsEl = document.getElementById("tabs");
+const caseEl = document.getElementById("case");
+
+function elapsed(){ return TOTAL - remaining; }
+function caseAt(e){ return Math.min(CASES.length-1, Math.floor(e / CASE_SECS)); }
+function stepAt(e){
+  let t = e % CASE_SECS;
+  if(e >= TOTAL) return STEPS.length-1;
+  for(let i=0;i<STEPS.length;i++){ t -= STEPS[i].mins*60; if(t < 0) return i; }
+  return STEPS.length-1;
+}
+
+function renderTabs(){
+  tabsEl.innerHTML = "";
+  CASES.forEach((c,i)=>{
+    const b = document.createElement("button");
+    b.className = "tab"; b.id = "tab-"+c.id; b.type = "button"; b.setAttribute("role","tab");
+    b.setAttribute("aria-selected", i===current ? "true":"false");
+    b.setAttribute("aria-controls","case");
+    b.innerHTML = `<span class="letter">Case ${c.id} · ${i+1} of 3</span><span class="name"></span><span class="pill ${c.kind}">${c.kindLabel}</span>`;
+    b.querySelector(".name").textContent = c.title;
+    b.addEventListener("click", ()=>select(i));
+    tabsEl.appendChild(b);
+  });
+}
+
+function renderBar(){
+  const bar = document.getElementById("bar");
+  bar.innerHTML = "";
+  CASES.forEach(c=>{
+    const s = document.createElement("div"); s.className = "seg";
+    s.innerHTML = `<div class="track"><div class="fill"></div></div><small>Case ${c.id} · 5 min</small>`;
+    bar.appendChild(s);
+  });
+}
+
+function renderCase(){
+  const c = CASES[current];
+  caseEl.dataset.kind = c.kind;
+  caseEl.setAttribute("aria-labelledby","tab-"+c.id);
+  caseEl.innerHTML = `
+    <div class="case-head">
+      <p class="eyebrow">Case ${c.id} · ${current+1} of 3</p>
+      <h2></h2>
+      <span class="pill ${c.kind}">${c.kindLabel}</span>
+    </div>
+    <p class="scenario"></p>
+    <div class="steps" id="steps"></div>`;
+  caseEl.querySelector("h2").textContent = c.title;
+  caseEl.querySelector(".scenario").textContent = c.text;
+
+  const stepsEl = document.getElementById("steps");
+  STEPS.forEach(s=>{
+    const d = document.createElement("div");
+    d.className = "step"; d.id = "step-"+s.key;
+    d.innerHTML = `<div class="step-top"><h3></h3><span class="mins">${s.mins} min</span></div><ul></ul>`;
+    d.querySelector("h3").textContent = s.name;
+    s.prompts.forEach(p=>{ const li=document.createElement("li"); li.textContent=p; d.querySelector("ul").appendChild(li); });
+    const hint = c.hints[s.key];
+    if(hint){
+      const det = document.createElement("details");
+      det.innerHTML = `<summary>Stuck? A nudge</summary><p></p>`;
+      det.querySelector("p").textContent = hint;
+      d.appendChild(det);
+    }
+    stepsEl.appendChild(d);
+  });
+
+  paintTimer();
+}
+
+function paintTimer(){
+  const m = Math.floor(remaining/60), s = remaining%60;
+  document.getElementById("clock").textContent = `${m}:${String(s).padStart(2,"0")}`;
+  const e = elapsed(), ci = caseAt(e), si = stepAt(e);
+  const started = running || remaining < TOTAL;
+  const now = document.getElementById("now");
+  if(remaining === 0) now.innerHTML = "<b>Time's up.</b> Reporter, pick one idea to share in case your group is called on.";
+  else if(!started) now.innerHTML = "Timekeeper: press <b>Start</b> when everyone has this page open.";
+  else now.innerHTML = `Now: <b>Case ${CASES[ci].id}, ${STEPS[si].name}</b>${running ? "" : " (paused)"}`;
+
+  document.querySelectorAll("#bar .seg").forEach((seg,i)=>{
+    const done = Math.min(Math.max(e - i*CASE_SECS, 0), CASE_SECS);
+    seg.querySelector(".fill").style.width = (done/CASE_SECS*100)+"%";
+    seg.classList.toggle("on", started && remaining > 0 && i === ci);
+  });
+
+  STEPS.forEach((st,i)=>{
+    const el = document.getElementById("step-"+st.key);
+    if(el) el.classList.toggle("active", started && remaining > 0 && ci === current && i === si);
+  });
+
+  const move = document.getElementById("moveon");
+  if(started && remaining > 0 && ci !== current){
+    move.hidden = false;
+    move.innerHTML = `<span>Time to move to Case ${CASES[ci].id}: ${CASES[ci].title}.</span>`;
+    const b = document.createElement("button"); b.className = "btn"; b.type = "button";
+    b.textContent = `Go to Case ${CASES[ci].id}`; b.addEventListener("click", ()=>select(ci));
+    move.appendChild(b);
+  } else move.hidden = true;
+
+  document.getElementById("startBtn").textContent = running ? "Pause" : (remaining < TOTAL && remaining > 0 ? "Resume" : "Start");
+}
+
+let lastCase = 0;
+function toggle(){
+  if(remaining === 0) return;
+  running = !running;
+  if(running){
+    tick = setInterval(()=>{
+      remaining = Math.max(0, remaining-1);
+      const ci = caseAt(elapsed());
+      if(ci !== lastCase){
+        lastCase = ci;
+        select(ci);
+      }
+      if(remaining === 0){ running = false; clearInterval(tick); }
+      paintTimer();
+    }, 1000);
+  } else clearInterval(tick);
+  paintTimer();
+}
+function reset(){ running = false; clearInterval(tick); remaining = TOTAL; lastCase = 0; paintTimer(); }
+
+
+function select(i){
+  current = i;
+  try{ history.replaceState(null, "", "#"+CASES[i].id.toLowerCase()); }catch(e){}
+  renderTabs(); renderCase();
+}
+
+document.getElementById("startBtn").addEventListener("click", toggle);
+document.getElementById("resetBtn").addEventListener("click", reset);
+renderBar(); renderTabs(); renderCase();
+</script>
+
+</body></html>
